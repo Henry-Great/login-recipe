@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fefefe;
+      padding: 20px;
+    }
+
+    .login-container {
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .back-btn {
+      background-color: #e53935;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: white;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      cursor: pointer;
+    }
+
+    .login-header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .login-header p {
+      color: #444;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    .form-links {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .form-links a {
+      text-decoration: none;
+      color: #444;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    .alt-login {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .alt-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e53935;
+      background-color: transparent;
+      color: #e53935;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .alt-btn:hover {
+      background-color: #ffeaea;
+    }
+
+    .create-account {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .create-account a {
+      color: #e53935;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
+    .create-account a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    
+    <!-- Back Button -->
+    <div class="back-btn">
+      <span><a href="./RECIPE SIGNUP.html">&larr;</a></span>
+    </div>
+
+    <!-- Heading -->
+    <div class="login-header">
+      <h1>Login</h1>
+      <p>Lorem ipsum dolo consectetur adipiscing elit,</p>
+    </div>
+
+    <!-- Form -->
+    <form class="login-form">
+      <input type="text" placeholder="Full Name" />
+      <input type="password" placeholder="Password" />
+
+      <div class="form-links">
+        <a href="./RECIPE FORGOT PASSWORD.html"><b> Forgot password?</b></a>
+      </div>
+
+      <button onclick="handleAction()">Login</button>
+  
+
+      <div class="alt-login">
+        <button class="alt-btn">Apple</button>
+        <button class="alt-btn">Google</button>
+      </div>
+    </form>
+
+    <!-- Create Account -->
+       <div class="switch">
+    <span id="toggle-text">New here? <a href="./RECIPE SIGNUP.html" onclick="toggleMode()">Create account</a></span>
+  </div>
+
+ <script>
+  let isLogin = true;
+
+  function toggleMode() {
+    isLogin = !isLogin;
+    document.getElementById("form-title").textContent = isLogin ? "Login" : "Create Account";
+    document.querySelector("button").textContent = isLogin ? "Login" : "Create Account";
+    document.getElementById("toggle-text").innerHTML = isLogin
+      ? 'New here? <a href="#" onclick="toggleMode()">Create account</a>'
+      : 'Already have an account? <a href="#" onclick="toggleMode()">Login</a>';
+    document.getElementById("message").textContent = "";
+  }
+
+  function handleAction() {
+    const name = document.getElementById("fullname").value.trim();
+    const pass = document.getElementById("password").value;
+    const msg = document.getElementById("message");
+
+    if (!name || !pass) {
+      alert("Please fill in both fields.");
+      return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (isLogin) {
+      const existing = users.find(user => user.name === name && user.password === pass);
+      if (existing) {
+        msg.style.color = "green";
+        msg.textContent = `Welcome back, ${name}! 🎉`;
+      } else {
+        msg.style.color = "red";
+        msg.textContent = `Invalid name or password.`;
+      }
+    } else {
+      const exists = users.find(user => user.name === name);
+      if (exists) {
+        msg.style.color = "red";
+        msg.textContent = `User with that name already exists.`;
+        return;
+      }
+
+      users.push({ name, password: pass });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      msg.style.color = "green";
+      msg.textContent = `Account created! You can now login.`;
+      toggleMode();
+    }
+  }
+</script>
+
+</body>
+</html>
+

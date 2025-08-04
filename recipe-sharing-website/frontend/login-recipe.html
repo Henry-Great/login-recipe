@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipee App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+    }
+    .screen {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    #splash-screen {
+      background-color: #e53935;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    #splash-screen h1 {
+      font-size: 48px;
+    }
+    #splash-screen p {
+      margin-top: 10px;
+    }
+    #create-account {
+      display: none;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+    }
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px;
+      background-color: #e53935;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .link {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .link span {
+      color: #e53935;
+      cursor: pointer;
+    }
+    img {
+      width: 250px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash screen -->
+  <div id="splash-screen" class="screen" style="display:flex;">
+    <h1>Recipee</h1>
+    <p>Sharing savories</p>
+  </div>
+
+  <!-- Create account screen -->
+  <div id="create-account" class="screen">
+    <h2>Create an Account</h2>
+    <p>Lorem ipsum dolo consectetur adipiscing elit,</p>
+    <img src="https://images.unsplash.com/photo-1603133872873-8b2351a46f42" alt="Food" />
+    <button id="register-btn">Register using email</button>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <button style="border: 2px solid #e53935; background: white; color: #e53935;">Apple</button>
+      <button style="border: 2px solid #e53935; background: white; color: #e53935;">Google</button>
+    </div>
+    <p class="link">Have an account? <span id="login-link">Login</span></p>
+  </div>
+
+  <!-- Register with email -->
+  <div id="register-email" class="screen">
+    <h2>Register</h2>
+    <form>
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <p class="link">Already have an account? <span id="go-login">Login</span></p>
+  </div>
+
+
+<!-- Login screen -->
+  <div id="login-screen" class="screen">
+     <h2>Login</h2>
+     <form>
+       <input type="email" placeholder="Email" required />
+       <input type="password" placeholder="Password" required />
+         <div style="width: 100%; max-width: 300px; text-align: right; margin-top: -10px; margin-bottom: 10px;">
+           <a href="./RECIPE-FORGOT-PASSWORD.html" style="font-size: 14px; color: #e53935;">Forgot Password?</a>
+         </div>
+    <button type="submit">Login</button>
+    </form>
+    <p class="link">Don't have an account? <span id="go-register">Register</span></p>
+  </div>
+
+  <script>
+    const splash = document.getElementById("splash-screen");
+    const create = document.getElementById("create-account");
+    const registerEmail = document.getElementById("register-email");
+    const loginScreen = document.getElementById("login-screen");
+
+    document.addEventListener("click", function splashClick() {
+      splash.style.display = "none";
+      create.style.display = "flex";
+      document.removeEventListener("click", splashClick);
+    });
+
+    document.getElementById("register-btn").addEventListener("click", () => {
+      create.style.display = "none";
+      registerEmail.style.display = "flex";
+    });
+
+    document.getElementById("login-link").addEventListener("click", () => {
+      create.style.display = "none";
+      loginScreen.style.display = "flex";
+    });
+
+    document.getElementById("go-login").addEventListener("click", () => {
+      registerEmail.style.display = "none";
+      loginScreen.style.display = "flex";
+    });
+
+    document.getElementById("go-register").addEventListener("click", () => {
+      loginScreen.style.display = "none";
+      registerEmail.style.display = "flex";
+    });
+  </script>
+</body>
+</html>
